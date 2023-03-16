@@ -51,7 +51,7 @@ const declareWinner = (playerSelection, computerSelection) => {
     }
 }
 
-console.log(declareWinner('Rock', 'Rock'))
+console.log(declareWinner('Rock', getComputerChoice()))
 
 
 
