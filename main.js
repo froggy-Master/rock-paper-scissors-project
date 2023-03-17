@@ -19,10 +19,15 @@ const getComputerChoice = () =>  {
     return selection
 }
 
+const getPlayerChoice = () => {
+    return prompt('Enter Rock, Paper, or Scissors')
+}
+
+
 // function evaluateRount compares the player's selection and the computer's
 // and declairs the winner of the two from the player's perspective.
 // I.e., the function will output "You Lose!" if the player loses
-const declareWinner = (playerSelection, computerSelection) => {
+const playRound = (playerSelection, computerSelection) => {
     const playerChoice = capitalize(playerSelection)
     let playerWon;
 
@@ -51,9 +56,36 @@ const declareWinner = (playerSelection, computerSelection) => {
     }
 }
 
-console.log(declareWinner('Rock', getComputerChoice()))
+
+const playerChoice = getPlayerChoice()
+
+const game = () => {
+    let playerScore = 0;
+    let computerScore = 0;
+
+    for (let i = 0; i < 5; i++) {
+        const gameOutcome = playRound(playerChoice, getComputerChoice())
+
+        console.log(gameOutcome)
+
+        if (gameOutcome.includes('Win!')) {
+            playerScore++;
+        } else if (gameOutcome.includes('Lose!')) {
+            computerScore++;
+        }
+    }
+
+    if (playerScore > computerScore) {
+        return 'You Win!'
+    } else if (computerScore > playerScore) {
+        return 'You Lose!'
+    } else {
+        return 'You Tied!'
+    }
+}
 
 
+console.log(game())
 
 
 
