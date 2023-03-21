@@ -32,13 +32,47 @@ const evaluateGame = (playerChoice, computerChoice) => {
         // handle win
         console.log('you win')
         playerScore++;
+        if (playerScore === 5) {
+            alert('YOU WIN!!');
+            reset()
+        }
         document.querySelector(`.player-score > h3`).textContent = `Score: ${playerScore}`;
     } else {
         // handle loss
         computerScore++;
+        if (computerScore === 5) {
+            alert('YOU LOSE!!');
+            reset()
+        }
         document.querySelector(`.computer-score > h3`).textContent = `Score: ${computerScore}`;
         console.log('you lose')
     }
+}
+
+const disableCardListeners = () => {
+    document.querySelector('.cards').childNodes.forEach(card => {
+        card.removeEventListener('click', handleCardSelection)
+    })
+}
+
+const enableCardListeners = () => {
+    document.querySelector('.cards').childNodes.forEach(card => {
+        card.addEventListener('click', handleCardSelection);
+    })
+    document.querySelectorAll('.card').forEach(card => {
+        card.classList.remove('selected')
+    })
+    document.querySelector('button').style.cssText = 'background-color: #F5EBEB; color: #867070'
+}
+
+const handleCardSelection = e => {
+    const playerChoice = getPlayerChoice(e);
+    const computerChoice = getComputerChoice();
+    document.querySelector(`.card[data="${playerChoice}"]`).classList.add('selected')
+    document.querySelector(`.card[id="${computerChoice}"]`).classList.add('selected');
+    evaluateGame(playerChoice, computerChoice)
+    document.querySelector('button').style.cssText = 'background-color: #867070; color: #F5EBEB'
+    disableCardListeners()
 }
 
 const reset = () => {
@@ -50,13 +84,9 @@ const reset = () => {
 
 
 document.querySelector('.cards').childNodes.forEach(card => {
-    card.addEventListener('click', e => {
-        const playerChoice = getPlayerChoice(e);
-        const computerChoice = getComputerChoice();
-        document.querySelector(`.card[data="${playerChoice}"]`).style.cssText = 'border: 2px solid #867070; transform: scale(1.03)';
-        document.querySelector(`.card[id="${computerChoice}"]`).style.cssText = 'border: 2px solid #867070; transform: scale(1.03)';
-        evaluateGame(playerChoice, computerChoice)
-    })
+    card.addEventListener('click', handleCardSelection)
 })
 
-document.querySelector('#reset').addEventListener('click', reset)
+document.querySelector('#reset').addEventListener('click', reset);
+
+document.querySelector('#next-round').addEventListener('click', enableCardListeners);

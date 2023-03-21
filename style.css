@@ -62,6 +62,11 @@ body {
     transition: 1s;
 }
 
+.selected {
+    border: solid 2px #867070;
+    transform: scale(1.03);
+}
+
 .divider {
     background-color: #867070;
     height: stretch;
@@ -69,12 +74,21 @@ body {
 }
 
 button {
+    height: 50px;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 24px;
     font-weight: bold;
     background-color: #867070;
-    color: #F5EBEB;
-    padding: 10px 30px;
+    color: #F5EBEB; 
     border-radius: 5px;
+}
+
+#next-round {
+    background-color: #F5EBEB;
+    color: #867070;
 }
 
 button:active {
