@@ -13,13 +13,15 @@ body {
     align-items: center;
 }
 
-.player > h1 {
+.player-score > h1,
+.computer-score > h1 {
     font-size: 36px;
     color: #867070;
     font-weight: bold;
 }
 
-.player > h3 {
+.player-score > h3,
+.computer-score > h3 {
     color: #867070;
 }
 
