@@ -26,12 +26,15 @@ let computerScore = 0;
 const evaluateGame = (playerChoice, computerChoice) => {
     if (playerChoice === computerChoice) {
         // handle tie
-        console.log('you tie')
-        alert('You Tied!')
+        console.log('you tie');
+        setOutcomeDesign(document.querySelector(`div[data="${playerChoice}"]`), 'tie')
+        setOutcomeDesign(document.querySelector(`#${computerChoice}`), 'tie')
     } else if ((playerChoice === 'Rock' && computerChoice === 'Scissors') || (playerChoice === 'Paper' && computerChoice === 'Rock') || playerChoice === 'Scissors' && computerChoice === 'Paper') {
         // handle win
         console.log('you win')
         playerScore++;
+        setOutcomeDesign(document.querySelector(`div[data="${playerChoice}"]`), 'win')
+        setOutcomeDesign(document.querySelector(`#${computerChoice}`), 'lose')
         if (playerScore === 5) {
             alert('YOU WIN!!');
             reset()
@@ -40,6 +43,8 @@ const evaluateGame = (playerChoice, computerChoice) => {
     } else {
         // handle loss
         computerScore++;
+        setOutcomeDesign(document.querySelector(`div[data="${playerChoice}"]`), 'lose')
+        setOutcomeDesign(document.querySelector(`#${computerChoice}`), 'win')
         if (computerScore === 5) {
             alert('YOU LOSE!!');
             reset()
@@ -62,7 +67,8 @@ const enableCardListeners = () => {
     document.querySelectorAll('.card').forEach(card => {
         card.classList.remove('selected')
     })
-    document.querySelector('button').style.cssText = 'background-color: #F5EBEB; color: #867070'
+    document.querySelector('button').style.cssText = 'background-color: #F5EBEB; color: #867070';
+    removeOutcomeDesign(document.querySelectorAll('.card'))
 }
 
 const handleCardSelection = e => {
@@ -80,6 +86,19 @@ const reset = () => {
     computerScore = 0;
     document.querySelector(`.computer-score > h3`).textContent = `Score: ${computerScore}`;
     document.querySelector(`.player-score > h3`).textContent = `Score: ${playerScore}`;
+    enableCardListeners()
+}
+
+function setOutcomeDesign (element, status) {
+    element.classList.add(`${status}`)
+}
+
+function removeOutcomeDesign (elements) {
+    elements.forEach(element => {
+        element.classList.remove('win');
+        element.classList.remove('lose');
+        element.classList.remove('tie')
+    })
 }
 
 
